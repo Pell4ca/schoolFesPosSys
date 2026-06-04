@@ -11,8 +11,6 @@ import CustomerTab from "./Tabs/CustomerTab.jsx";
 const css = {
   app: {
     fontFamily: "'Noto Sans JP', sans-serif",
-    maxWidth: 680,
-    margin: "0 auto",
     padding: "1rem",
     minHeight: "100vh",
     background: "#fafaf8",
