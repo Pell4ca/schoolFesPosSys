@@ -150,7 +150,7 @@ export default function POSPage(props) {
         });
     });
     const newOrder = {
-      id: state.nextId,
+      id: state.nextOrderId,
       total,
       items,
       headCount: Math.max(1, parseInt(sel.headCount) || 1),
@@ -160,7 +160,7 @@ export default function POSPage(props) {
     const next = {
       ...state,
       orders: [...state.orders, newOrder],
-      nextId: state.nextId + 1,
+      nextOrderId: state.nextOrderId + 1,
     };
     setState(next);
     saveState(next);

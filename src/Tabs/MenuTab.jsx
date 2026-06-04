@@ -33,8 +33,8 @@ export default function MenuTab(props) {
     if (!name || isNaN(price) || price < 0) return;
     const next = {
       ...state,
-      [type]: [...state[type], { id: state.nextId, name, price }],
-      nextId: state.nextId + 1,
+      [type]: [...state[type], { id: state.nextMenuId, name, price }],
+      nextMenuId: state.nextMenuId + 1,
     };
     setState(next);
     saveState(next);

@@ -17,7 +17,8 @@ export const defaultState = {
     { id: 9, name: "お水",             price: 100 },
   ],
   orders: [],
-  nextId: 1,
+  nextMenuId: 10,
+  nextOrderId:1,
 };
 
 export function loadState() {
