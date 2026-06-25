@@ -21,9 +21,9 @@ const css = {
 
 const TABS = [
   { id: "pos", label: "レジ" },
-  { id: "menu", label: "メニュー管理" },
-  { id: "stats", label: "集計" },
   { id: "customers", label: "来客" },
+  { id: "stats", label: "集計" },
+  { id: "menu", label: "メニュー管理" },
 ];
 
 export default function App() {

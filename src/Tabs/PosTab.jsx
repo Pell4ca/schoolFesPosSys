@@ -76,20 +76,21 @@ export default function POSPage(props) {
     headCount: "1",
   });
 
+  //数量変更・削除処理
   const handleCount = (type, id, delta) => {
-    setSel((s) => {
-      const current = s[type][id] || 0;
-      const next = current + delta;
+    setSel((sel) => {
+      const currentMenu = sel[type][id] || 0;
+      const next = currentMenu + delta;
       if (next <= 0) {
         // 0以下になったら削除（選択解除）
-        const updated = { ...s[type] };
+        const updated = { ...sel[type] };
         delete updated[id];
-        return { ...s, [type]: updated };
+        return { ...sel, [type]: updated };
       }
-      return { ...s, [type]: { ...s[type], [id]: next } };
+      return { ...sel, [type]: { ...sel[type], [id]: next } };
     });
   };
-
+  //計算ロジック
   const lines = [];
   let total = 0;
   Object.entries(sel.bases).forEach(([id, qty]) => {
@@ -113,7 +114,7 @@ export default function POSPage(props) {
       total += d.price * qty;
     }
   });
-
+  //会計確定処理
   const checkout = () => {
     const items = [];
     Object.entries(sel.bases).forEach(([id, qty]) => {
@@ -231,8 +232,8 @@ export default function POSPage(props) {
           <span>¥{total.toLocaleString()}</span>
         </div>
         <button
-          style={css.primaryBtn(Object.keys(sel.bases).length === 0)}
-          disabled={Object.keys(sel.bases).length === 0}
+          style={css.primaryBtn(Object.keys(sel.bases).length === 0 && Object.keys(sel.toppings).length === 0)}
+          disabled={Object.keys(sel.bases).length === 0 && Object.keys(sel.toppings).length === 0}
           onClick={checkout}
         >
           会計する
