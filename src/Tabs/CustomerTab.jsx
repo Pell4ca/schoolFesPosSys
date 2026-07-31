@@ -35,7 +35,7 @@ const css = {
   },
   custRow: {
     display: "flex",
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
     alignItems: "center",
     padding: "8px 0",
     borderBottom: "1px solid #f0ede6",
@@ -59,6 +59,10 @@ const css = {
     cursor: "pointer",
     fontWeight: 500,
   },
+  primaryBtn: {
+    padding: "2px 4px",
+    marginLeft: 8,
+  }
 };
 
 export default function CustomerTab({ state, setState }) {
@@ -91,6 +95,7 @@ export default function CustomerTab({ state, setState }) {
         </div>
       </div>
       <div style={css.card}>
+
         <div style={css.cardTitle}>来客履歴</div>
         {rev.length === 0 ? (
           <div style={css.empty}>まだ来客がありません</div>
@@ -111,7 +116,7 @@ export default function CustomerTab({ state, setState }) {
               .join("・");
             return (
               <div key={o.id} style={css.custRow}>
-                <div>
+                <div style={{ marginRight: "auto" }}>
                   <span style={{ fontSize: 12, color: "#888780" }}>
                     #{o.id}{" "}
                   </span>
@@ -134,6 +139,9 @@ export default function CustomerTab({ state, setState }) {
                 <span style={css.badge}>
                   {date} {time}
                 </span>
+                <button style={css.primaryBtn}>
+                  来客履歴を削除
+                </button>
               </div>
             );
           })
