@@ -140,6 +140,9 @@ export default function CustomerTab({ state, setState }) {
               .filter((x) => x.type === "topping")
               .map((x) => x.name)
               .join("・");
+
+            const hasDiscount = o.items.some((x) => x.type === "discount");
+
             return (
               <div key={o.id} style={css.custRow}>
                 <div style={{ marginRight: "auto" }}>
@@ -162,6 +165,19 @@ export default function CustomerTab({ state, setState }) {
                     </div>
                   )}
                 </div>
+
+                  {hasDiscount && (
+                    <span
+                      style={{
+                        fontSize: 11,
+                        color: "e24b4a",
+                        marginRight: 8,
+                        fontWeight: 600,
+                      }}>
+                        セット割適用
+                      </span>
+                  )}
+
                 <span style={css.badge}>
                   {date} {time}
                 </span>

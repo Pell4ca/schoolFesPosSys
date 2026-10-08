@@ -64,6 +64,13 @@ const css = {
     border: "1px solid #e8e6df",
     borderRadius: 8,
   },
+  discountToggle: {
+    dispay: "flex",
+    alignItems:"center",
+    gap: 6,
+    fontSize: 14,
+    marginBottom:12,
+  },
 };
 
 export default function POSPage(props) {
@@ -76,20 +83,35 @@ export default function POSPage(props) {
     headCount: "1",
   });
 
+  const DISCOUNT_AMOUNT = 50;
+
   //数量変更・削除処理
   const handleCount = (type, id, delta) => {
     setSel((sel) => {
       const currentMenu = sel[type][id] || 0;
       const next = currentMenu + delta;
+
+      let nextTypeData;
       if (next <= 0) {
-        // 0以下になったら削除（選択解除）
         const updated = { ...sel[type] };
         delete updated[id];
-        return { ...sel, [type]: updated };
+        nextTypeData = updated;
+      } else {
+        nextTypeData = {...sel[type], [id]: next};
       }
-      return { ...sel, [type]: { ...sel[type], [id]: next } };
+
+      //ベースが0個担った場合は割引を強制的に解除する
+      let nextIsDiscount = sel.isDiscount;
+      if (type === "bases" && Object.keys(nextTypeData).length === 0) {
+        nextIsDiscount = false;
+      }
+
+      return { ...sel, [type]: nextTypeData, isDiscount: nextIsDiscount };
     });
   };
+
+  const hasBase = Object.keys(sel.bases).length > 0;
+
   //計算ロジック
   const lines = [];
   let total = 0;
@@ -114,6 +136,13 @@ export default function POSPage(props) {
       total += d.price * qty;
     }
   });
+
+  //割引の適用計算
+  if(sel.isDiscount && hasBase) {
+    lines.push({ name: "セット割", price: -DISCOUNT_AMOUNT, qty: 1});
+    total -= DISCOUNT_AMOUNT;
+  }
+
   //会計確定処理
   const checkout = () => {
     const items = [];
@@ -150,6 +179,17 @@ export default function POSPage(props) {
           qty,
         });
     });
+
+    if (sel.isDiscount && hasBase) {
+      items.push({
+        type: "discount",
+        id: "set_discount",
+        name:"セット割引",
+        price: -DISCOUNT_AMOUNT,
+        qty: 1,
+      });
+    }
+
     const newOrder = {
       id: state.nextOrderId,
       total,
@@ -215,6 +255,23 @@ export default function POSPage(props) {
           <span style={{ fontSize: 14 }}>人</span>
         </div>
 
+        <label 
+          style={{
+            ...css.discountToggle,
+            cursor: hasBase ? "pointer" : "not-allowed",
+            color: hasBase ? "1a1a18" : "888780",
+          }}
+          >
+            <input
+              type="checkbox"
+              checked={sel.isDiscount}
+              onChange={(e) => 
+                setSel((s) => ({...s, isDiscount: e.target.checked}))
+              }
+              disabled={!hasBase}
+              />
+              セット割を適用(-¥{DISCOUNT_AMOUNT})
+              </label>
         {lines.length === 0 ? (
           <div style={css.empty}>まだ何も選ばれていません</div>
         ) : (
