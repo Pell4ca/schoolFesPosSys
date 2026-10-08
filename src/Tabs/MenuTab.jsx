@@ -51,7 +51,7 @@ export default function MenuTab(props) {
     <div>
       <div style={css.alert}>変更はリアルタイムで反映されます。</div>
       <MenuSection
-        title="🫓 クレープ生地"
+        title="🫓 クレープベース"
         type="bases"
         nameKey="baseName"
         priceKey="basePrice"
@@ -74,7 +74,7 @@ export default function MenuTab(props) {
         removeItem={removeItem}
         state={state}
       />
-      <MenuSection
+      {/* <MenuSection
         title="🥤 ドリンク"
         type="drinks"
         nameKey="drinkName"
@@ -85,7 +85,7 @@ export default function MenuTab(props) {
         addItem={addItem}
         removeItem={removeItem}
         state={state}
-      />
+      /> */}
     </div>
   );
 }

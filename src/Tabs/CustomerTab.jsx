@@ -82,6 +82,32 @@ export default function CustomerTab({ state, setState }) {
     saveState(defaultState);
   };
 
+  const deleteOrder = (targetId) => {
+    if (!window.confirm(`レシート番号#${targetId} の来客履歴を削除しますか？`)){
+      return;
+    }
+
+    //指定されたIDの履歴を除外
+    const filteredOrders = state.orders.filter((o) => o.id !== targetId);
+
+    //残りの履歴のIDを1から順に振り直す
+    const reindexedOrders = filteredOrders.map((o, index) => {
+      return {
+        ...o,
+        id: index + 1,
+      };
+    });
+
+    const newState = {
+      ...state,
+      orders: reindexedOrders,
+      nextOrderId: reindexedOrders.length + 1 //次回の会計で使われる番号をリセット
+    };
+
+    setState(newState);
+    saveState(newState);
+  }
+
   return (
     <div>
       <div style={css.metricGrid2}>
@@ -139,7 +165,10 @@ export default function CustomerTab({ state, setState }) {
                 <span style={css.badge}>
                   {date} {time}
                 </span>
-                <button style={css.primaryBtn}>
+                <button
+                  style={css.primaryBtn}
+                  onClick={() => deleteOrder(o.id)}
+                  >
                   来客履歴を削除
                 </button>
               </div>

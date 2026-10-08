@@ -29,7 +29,7 @@ export default function StatsTab({ state }) {
           <div style={css.metricValue}>¥{total.toLocaleString()}</div>
         </div>
         <div style={css.metric}>
-          <div style={css.metricLabel}>会計数</div>
+          <div style={css.metricLabel}>会計人数</div>
           <div style={css.metricValue}>{count}</div>
         </div>
         <div style={css.metric}>
@@ -38,20 +38,21 @@ export default function StatsTab({ state }) {
         </div>
       </div>
       <RankSection
-        title="🍓 トッピング 売上ランキング"
-        type="topping"
-        orders={state.orders}
-      />
-      <RankSection
-        title="🥤 ドリンク 売上ランキング"
-        type="drink"
-        orders={state.orders}
-      />
-      <RankSection
         title="🫓 生地 売上ランキング"
         type="base"
         orders={state.orders}
       />
+      <RankSection
+        title="🍓 トッピング 売上ランキング"
+        type="topping"
+        orders={state.orders}
+      />
+      {/* <RankSection
+        title="🥤 ドリンク 売上ランキング"
+        type="drink"
+        orders={state.orders}
+      /> */}
+      
     </div>
   );
 }

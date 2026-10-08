@@ -172,7 +172,7 @@ export default function POSPage(props) {
   return (
     <div>
       <Section
-        title="🫓 クレープ生地"
+        title="🫓 クレープベース"
         items={state.bases}
         type="base"
         sel={sel}
@@ -185,13 +185,13 @@ export default function POSPage(props) {
         sel={sel}
         onToggle={handleCount}
       />
-      <Section
+      {/* <Section
         title="🥤 ドリンク"
         items={state.drinks}
         type="drink"
         sel={sel}
         onToggle={handleCount}
-      />
+      /> */}
       <div style={css.card}>
         <div style={css.cardTitle}>🧾 会計</div>
 
