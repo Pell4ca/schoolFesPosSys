@@ -136,6 +136,12 @@ export default function CustomerTab({ state, setState }) {
               month: "short",
               day: "numeric",
             });
+
+            const bases = o.items
+              .filter((x) => x.type === "base")
+              .map((x) => x.name)
+              .join(".");
+
             const tops = o.items
               .filter((x) => x.type === "topping")
               .map((x) => x.name)
@@ -157,6 +163,15 @@ export default function CustomerTab({ state, setState }) {
                   >
                     {o.headCount || 1}人
                   </span>
+
+                  {bases && (
+                    <div
+                      style={{ fontSize: 12, color: "888780", marginTop: 2}}
+                      >
+                        {bases}
+                      </div>
+                  )}
+
                   {tops && (
                     <div
                       style={{ fontSize: 12, color: "#888780", marginTop: 2 }}
